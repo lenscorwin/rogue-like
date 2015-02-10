@@ -35,16 +35,17 @@ void	MyAwesomeFunction(void) {
 ##### File name convention
 
 For a class file, respect the Javascript naming rules (^)
-```MyClassName.cpp```
-```MyClassName.hpp```
+`MyClassName.cpp`
+`MyClassName.hpp`
 Of course, the name of the class file must the respect the name of the class itself.
 
 
 For a main, or outside-class functions, the Unix convention.
-```main.cpp```
-```my_awesome_functions.cpp```
+`main.cpp`
+`my_awesome_functions.cpp`
 
-> Note of the author
+> Note of the author:
+>
 > Seem's like a little complicated, but we can actually make the difference betweeen class and functions with a ls.
 
 ### Comments
