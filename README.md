@@ -1,5 +1,5 @@
 # Rogue-Like
-[![Build Status](https://travis-ci.org/Ne02ptzero/rogue-like.svg)](https://travis-ci.org/Ne02ptzero/rogue-like)
+[![Build Status](https://travis-ci.org/Ne02ptzero/rogue-like.svg?branch=master)](https://travis-ci.org/Ne02ptzero/rogue-like)
 
 [![Join the chat at https://gitter.im/Ne02ptzero/rogue-like](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Ne02ptzero/rogue-like?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
