@@ -28,7 +28,7 @@ if (TRUE) {
 For function's name, go with the Javascript Naming rules:
 
 ```cpp
-void	MyAwesomeFunction(void) {
+void	myAwesomeFunction(void) {
 	/* Some code */
 }
 ```
@@ -36,7 +36,7 @@ void	MyAwesomeFunction(void) {
 
 For a class file, respect the Javascript naming rules (^)
 `MyClassName.cpp`
-`MyClassName.hpp`
+`CyClassName.hpp`
 Of course, the name of the class file must the respect the name of the class itself.
 
 
@@ -47,6 +47,43 @@ For a main, or outside-class functions, the Unix convention.
 > Note of the author:
 >
 > Seem's like a little complicated, but we can actually make the difference betweeen class and functions with a ls.
+
+### Class
+
+##### Headers
+
+A header file __must have__ a protection against infinite inclusion:
+```cpp
+#ifdef __CLASS__
+# define __CLASS__
+/* Header's code */
+#endif
+```
+
+Also, for a class, please the respect this template:
+
+```cpp
+class	MyClass {
+	// Public first
+	public:
+		/* Constructors and Destructors */
+		MyClass();
+		...
+
+		/* Functions */
+		void	makeSomeStuff(void);
+		...
+
+		/* Variables */
+		int		n;
+		...
+
+	// Then, private, same order as public.
+	private:
+		...
+};
+```
+The order is this one: public, protected, private.
 
 ### Comments
 
