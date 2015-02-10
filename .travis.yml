@@ -1,2 +1,3 @@
 language: cpp
 script: make
+before_install: sudo ./Angel/nix-prereqs.sh

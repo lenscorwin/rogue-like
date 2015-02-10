@@ -79,7 +79,7 @@ $(TARGET): $(LIBANGEL) $(OBJS) $(SYSOBJS) $(WRAPPER)
 	cp -p Angel/Scripting/EngineScripts/*.lua Resources/Scripts
 
 clean:
-	rm -f $(OBJS) $(SYSOBJS) $(TARGET) $(WRAPPER)
+	rm -f $(OBJS) $(SYSOBJS) $(TARGET)
 
 $(LIBANGEL):
 	cd Angel && make
