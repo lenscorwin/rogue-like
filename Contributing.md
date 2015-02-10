@@ -2,7 +2,7 @@
 
 Wanna contribute ? Nice :D
 
-There is some code rule, to keep the project and the code lisible.
+There are some code rules, to keep the project and the code readable.
 
 ### Releases:
 > Base code's rules
@@ -36,7 +36,7 @@ void	myAwesomeFunction(void) {
 
 For a class file, respect the Javascript naming rules (^)
 `MyClassName.cpp`
-`CyClassName.hpp`
+`MyClassName.hpp`
 Of course, the name of the class file must the respect the name of the class itself.
 
 
@@ -44,9 +44,9 @@ For a main, or outside-class functions, the Unix convention.
 `main.cpp`
 `my_awesome_functions.cpp`
 
-> Note of the author:
+> Author's note:
 >
-> Seem's like a little complicated, but we can actually make the difference betweeen class and functions with a ls.
+> Seems like a little complicated, but we can actually make the difference between class and functions with a ls.
 
 ### Class
 
@@ -175,9 +175,9 @@ Also, we gain 1.3s at the build.
 ### Build
 
 *For main contributors:*
-Be carefull, the build verification is make __after__ your push. so look at the travis icon for build.
+Be careful, the build verification is made __after__ your push. so look at the travis icon for build.
 
 *For pull requests*
-Travis is automaticlly made the build, so if it failed, we can past you the debug as a comment to your pull request.
+Travis automatically makes the build, so if it failed, we can send you the debug as a comment to your pull request.
 
 Happy contributing :)
