@@ -44,28 +44,28 @@ Each playthrough, you’ll have to go through 10 different maps each linked by a
 Enemies will spawn in each room of a level until they are killed. Once a room is cleaned, coming back into it will not create new enemies. Each kind of enemy will be different, either ranged or melee, with varying HP, damage, movespeed, and special abilities. They will move by themselves according to their AI and attack the character “on sight” with projectiles, ranged attack or melee weapons. Dodging their attacks and killing them will grant money to the player. Upon a certain number of blows, the character dies and lose all its current items and accumulated experience.
 
 ## V - Boss
-	Boss will be special enemies with a special moveset that will require the player to place himself correctly in order not to get hit by anything. Damage will be high, HP will be high, but the reward is high aswell. Plus, it’s a must-kill enemy if you want to advance in the game.
+Boss will be special enemies with a special moveset that will require the player to place himself correctly in order not to get hit by anything. Damage will be high, HP will be high, but the reward is high aswell. Plus, it’s a must-kill enemy if you want to advance in the game.
 
 ## VI - Leveling 
-	At the end of each run, you can permanently invest the money you saved from your previous runs in order to improve one of the character (besides the beggar). Each level will grant bonus armor, damage, HP. Some levels will also grant access to a new rank of skills (1 - 5 - 10 - 20)
+At the end of each run, you can permanently invest the money you saved from your previous runs in order to improve one of the character (besides the beggar). Each level will grant bonus armor, damage, HP. Some levels will also grant access to a new rank of skills (1 - 5 - 10 - 20)
 
 ## VII - Skillset
-	At the beginning of each run, you can choose which skills to equip your character. Each class will have different skillset that require to be unlocked with money. There are 3 levels for each skills.	(WIP)
+At the beginning of each run, you can choose which skills to equip your character. Each class will have different skillset that require to be unlocked with money. There are 3 levels for each skills.	(WIP)
 
 ## VIII - Items
 	Items will be core within the gameplay. They will require a class and a level to be carried. The character can equip a number of items. head armor, chest armor, weapon, ring. These items can bring simply better stats, or can completely change gameplay. For example, equipping a new weapon can change the moveset of the character, or give him bonus skills.  Some items will also allow to bend the games rules.
 Items are uniques and usable only during the current run. They are lost upon death or when the run ends.
 
 ## IX - Inventory
-	The inventory will be accessible via the menu during a run. It will contain all the equipment the player found during the playthrough. Part of it can be equipped, the remainder will be kept in the inventory and it won’t affect the gameplay. If the inventory is full, the player has to drop an item on the ground before taking another one. Items on the ground can be looted again.
+The inventory will be accessible via the menu during a run. It will contain all the equipment the player found during the playthrough. Part of it can be equipped, the remainder will be kept in the inventory and it won’t affect the gameplay. If the inventory is full, the player has to drop an item on the ground before taking another one. Items on the ground can be looted again.
 
 ## X - Money
-	Money (or experience) will be the only currency in the game. It will be looted from regular monsters, and in bigger quantity from secret rooms or bosses. It can be used 3 different ways.
+Money (or experience) will be the only currency in the game. It will be looted from regular monsters, and in bigger quantity from secret rooms or bosses. It can be used 3 different ways.
 Shop : During the run, the player might encounter a secret room which contains a vendor selling items. The player can use the currency he found during the current run to buy.
 Leveling : All the money the player will have saved during a run can be stocked and used in order to level the different characters.
 Skillset : In the same way the money is used for leveling, the player can buy or upgrade the skills available for each character.
 All money not saved is lost upon death of the character during a run. If the run is complete, all the money is saved.
 
 ## XI - Chest
-	The chest will be in a special room, hidden from plain sight. But some clues might help the player finding it.
+The chest will be in a special room, hidden from plain sight. But some clues might help the player finding it.
 Once the player reaches the chest, he can store an item in it. The item will be retrievable for next runs, until it is picked up again. The chest can only contain one slot, so the player will have to chose which item he wants to save. The chest will also allow the player to save its current money, in order to use it in next runs. In the later levels, an optional boss will have to be beaten in order to access the chest.
