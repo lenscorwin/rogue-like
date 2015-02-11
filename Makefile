@@ -10,13 +10,13 @@ CFLAGS =	-Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj archive
+	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -configuration 'Release' CONFIGURATION_BUILD_DIR='build'
 
 clean:
-	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj clean
+	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -configuration 'Release' CONFIGURATION_BUILD_DIR='build' clean
 
 exec:
-	open macosx/Published/My\ GameJam\ Game/My\ GameJam\ Game.app/
+	open macosx/build/ClientGame.app/
 
 re: clean all
 
