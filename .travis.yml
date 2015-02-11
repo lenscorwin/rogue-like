@@ -1,5 +1,5 @@
 language: cpp
-script: xctool -project macosx/ClientGame.xcodeproj -scheme ClientGame build
+script: xctool -project macosx/ClientGame.xcodeproj -scheme nawak build
 os: osx
 before_install: 
     - sudo ./Angel/nix-prereqs.sh
