@@ -10,7 +10,7 @@ CFLAGS =	-Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -configuration 'Release' CONFIGURATION_BUILD_DIR='build'
+	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -configuration 'Release' -destination generic/platform='OS X' CONFIGURATION_BUILD_DIR='build'
 
 clean:
 	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -configuration 'Release' CONFIGURATION_BUILD_DIR='build' clean

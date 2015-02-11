@@ -1,5 +1,5 @@
 language: cpp
-script: xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -list
+script: make
 os: osx
 before_install: 
     - sudo ./Angel/nix-prereqs.sh
