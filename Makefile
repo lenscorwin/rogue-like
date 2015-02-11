@@ -10,6 +10,7 @@ CFLAGS =	-Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
+	sw_vers
 	xcodebuild -scheme ClientGame -project macosx/ClientGame.xcodeproj -configuration 'Release' -destination generic/platform='OS X' CONFIGURATION_BUILD_DIR='build'
 
 clean:
