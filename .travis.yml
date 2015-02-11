@@ -1,6 +1,6 @@
 language: cpp
-script: make
+script: xctool -project macosx/ClientGame.xcodeproj -scheme ClientGame build
+os: osx
 before_install: 
     - sudo ./Angel/nix-prereqs.sh
     - brew update
-    - xctool -project macosx/ClientGame.xcodeproj -scheme ClientGame build
