@@ -1,6 +1,4 @@
 # Rogue-Like MAC OSX
-[![Build Status](https://travis-ci.org/Ne02ptzero/rogue-like.svg?branch=MacOSX)](https://travis-ci.org/Ne02ptzero/rogue-like)
-
 [![Join the chat at https://gitter.im/Ne02ptzero/rogue-like](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Ne02ptzero/rogue-like?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### First draft on open project thoughts and timeline
