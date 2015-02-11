@@ -56,6 +56,76 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1A1B35DB1A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 345AAD0711CB3710002B4471;
+			remoteInfo = Angel;
+		};
+		1A1B35DD1A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34A18BA60E284044001C79A5;
+			remoteInfo = Box2D;
+		};
+		1A1B35DF1A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 343C16CC13194490003637EA;
+			remoteInfo = Vorbis;
+		};
+		1A1B35E11A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 343C16BA13194433003637EA;
+			remoteInfo = Ogg;
+		};
+		1A1B35E31A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34828122176EA6F0003E8994;
+			remoteInfo = GLFW;
+		};
+		1A1B35E51A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34FB46731638F773002EB836;
+			remoteInfo = GWEN;
+		};
+		1A1B35E71A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 346E3BB80E28637A00E6C79E;
+			remoteInfo = FTGL;
+		};
+		1A1B35E91A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3406447811E7DE4200033B1D;
+			remoteInfo = FreeType;
+		};
+		1A1B35EB1A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3433A8D00E2AADDE00A02B4E;
+			remoteInfo = HIDUtilities;
+		};
+		1A1B35ED1A8B830200AA861B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34EECBDB11CB922100667B26;
+			remoteInfo = Lua;
+		};
 		34A6E3281527632500BEA400 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 34A6E3171527632500BEA400 /* Angel.xcodeproj */;
@@ -339,6 +409,16 @@
 			buildRules = (
 			);
 			dependencies = (
+				1A1B35DC1A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35DE1A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35E01A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35E21A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35E41A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35E61A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35E81A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35EA1A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35EC1A8B830200AA861B /* PBXTargetDependency */,
+				1A1B35EE1A8B830200AA861B /* PBXTargetDependency */,
 				34A6E3401527633800BEA400 /* PBXTargetDependency */,
 			);
 			name = ClientGame;
@@ -514,6 +594,56 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1A1B35DC1A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Angel;
+			targetProxy = 1A1B35DB1A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35DE1A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Box2D;
+			targetProxy = 1A1B35DD1A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35E01A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Vorbis;
+			targetProxy = 1A1B35DF1A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35E21A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Ogg;
+			targetProxy = 1A1B35E11A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35E41A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GLFW;
+			targetProxy = 1A1B35E31A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35E61A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GWEN;
+			targetProxy = 1A1B35E51A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35E81A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FTGL;
+			targetProxy = 1A1B35E71A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35EA1A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FreeType;
+			targetProxy = 1A1B35E91A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35EC1A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HIDUtilities;
+			targetProxy = 1A1B35EB1A8B830200AA861B /* PBXContainerItemProxy */;
+		};
+		1A1B35EE1A8B830200AA861B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Lua;
+			targetProxy = 1A1B35ED1A8B830200AA861B /* PBXContainerItemProxy */;
+		};
 		34A6E3401527633800BEA400 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LuaExe;
