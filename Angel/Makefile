@@ -145,5 +145,9 @@ $(TARGET): libraries $(OBJS) Lua
 	$(AR) $@ $(OBJS) $(LIBS)
 	$(RANLIB) $@
 
+angel: libraries $(OBJS) Lua
+	$(AR) $@ $(OBJS) $(LIBS)
+	$(RANLIB) $@
+
 clean: FTGL-clean GLFW-clean Box2D-clean gwen-clean Lua-clean SWIG-clean
 	rm -f $(OBJS) $(TARGET)

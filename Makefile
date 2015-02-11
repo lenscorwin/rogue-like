@@ -83,3 +83,5 @@ clean:
 
 $(LIBANGEL):
 	cd Angel && make
+
+re: clean all

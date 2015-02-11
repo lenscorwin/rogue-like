@@ -542,8 +542,8 @@ public:
 	 * This is a good place to clear out any cached pointers, etc.
 	 */
 	virtual void LevelUnloaded() {}
-	
-	/**
+
+		/**
 	 * Yes, this looks pointless and redundant. But it has a function for the 
 	 *  scripting layer -- it activates the inheritance downcasts so you can
 	 *  get a derived object from its base pointer.

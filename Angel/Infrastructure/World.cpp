@@ -605,6 +605,28 @@ void World::SendCollisionNotifications(b2Contact* contact, bool beginning)
 			_currentTouches[pa2].insert(pa1);
 		}
 	}
+
+	/* MODIFIED CODE BY Louis */
+	if (pa1 && pa2) {
+ 		StringSet::iterator a = pa1->GetTags().begin();
+ 		StringSet::iterator b = pa2->GetTags().begin();
+		String globalMessage = messageStart + ":" + *a  + "." + *b;
+		String globalMessage2 = messageStart + ":" + *b  + "." + *a;
+		if (theSwitchboard.GetSubscribersTo(globalMessage).size() > 0) {
+			if (_currentTouches[pa2].find(pa1) == _currentTouches[pa2].end()) {
+				// 1 > 2
+				TypedMessage<b2Contact*>* coll = new TypedMessage<b2Contact*>(globalMessage, contact, pa1);
+				theSwitchboard.Broadcast(coll);
+
+				// 2 > 1
+				coll = new TypedMessage<b2Contact*>(globalMessage2, contact, pa2);
+				theSwitchboard.Broadcast(coll);
+
+			}
+			_currentTouches[pa2].insert(pa1);
+		}
+	}
+	/* END */
 }
 
 void World::BeginContact(b2Contact* contact)
