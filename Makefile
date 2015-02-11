@@ -1,7 +1,7 @@
 ANGEL_DISABLE_FMOD := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_FMOD[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' Angel/AngelConfig.h)
 ANGEL_DISABLE_DEVIL := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_DEVIL[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' Angel/AngelConfig.h)
 CXX = g++
-TARGET = ClientGame
+TARGET = rogue-like
 ANGEL_FLAGS = -D ANGEL_RELEASE
 ARCH := $(shell uname -m)
 ALLEGRO_LIBS := $(shell allegro-config --libs 2>/dev/null)
@@ -52,9 +52,7 @@ endif
 SYSSRCS = 							\
 	$(WRAPPER)
 
-SRCS =								\
-	stdafx.cpp						\
-	Main.cpp
+SRCS =	$(wildcard Sources/src/*.cpp)
 
 SYSOBJS = $(patsubst %.cpp,%.o,$(SYSSRCS))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))

@@ -11,6 +11,16 @@ There are quite a few games available that use this concept. Overall, Rogue Lega
 
 On the topic of our game, we are looking to create a 2D scrolling game with procedural-based map construction, using already existing tools such as a C++ open-sourced graphic and physics engine, in order to focus more heavily on the game itself. 
 
+## Installation:
+
+### Linux and OSX
+**Clone**:
+
+```
+git clone --recursive http://github.com/Ne02ptzero/rogue-like
+```
+
+
 ## About:
 This project use [Angel2d](https://github.com/angel2d/angel2d), [Documentation](http://docs.angel2d.com/)
 
