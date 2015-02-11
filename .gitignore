@@ -116,8 +116,6 @@ build/
 #     - unless they are "shared")
 #
 # NB: this is exclusive with OPTION 2 below
-xcuserdata
-*.xcheckout
 
 
 # OPTION 2: ---------------------------------
@@ -132,7 +130,6 @@ xcuserdata
 
 #     (requires option 2 above): Personal Schemes
 #
-!xcuserdata/**/xcschemes/*
 
 ####
 # XCode 4 workspaces - more detailed
