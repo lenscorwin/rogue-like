@@ -1,0 +1,41 @@
+{
+	"General" : {
+		"name": "Example Map",
+		"callbacks": "SomeCallback",
+		"world": "Basic",
+		"id": "1"
+	},
+	"Blocks": {
+		"1": {
+			"type": "ground",
+			"sprite": "/path/to/png"
+		},
+		"2": {
+			"type": "wall",
+			"sprite": "/path/to/png"
+		},
+		"3": {
+			"type": "corner",
+			"orientation": "90",
+			"sprite": "/path/to/png"
+		},
+		"4": {
+			"heritage": "1",
+			"attribute": "start"
+		},
+		"5": {
+			"heritage": "1",
+			"attribute": "end",
+			"nextMap": "2"
+		}
+	},
+	"Map": {
+		{
+			{2,0,0,0,0,0,2},
+			{2,0,0,0,0,0,2},
+			{2,0,0,0,0,0,2},
+			{2,0,0,0,0,0,2},
+			{3,4,1,1,1,5,3}
+		}
+	}
+}
