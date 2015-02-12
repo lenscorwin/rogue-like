@@ -21,8 +21,10 @@ public:
 		this->p1->GetBody()->SetFixedRotation(true);
 		theWorld.Add(this->p1);
 		theSwitchboard.SubscribeTo(this, "Jump");
-		theSwitchboard.SubscribeTo(this, "Forward");
-		theSwitchboard.SubscribeTo(this, "Backward");
+		theSwitchboard.SubscribeTo(this, "ForPressed");
+		theSwitchboard.SubscribeTo(this, "BackPressed");
+		theSwitchboard.SubscribeTo(this, "ForReleased");
+		theSwitchboard.SubscribeTo(this, "BackReleased");
 		theSwitchboard.SubscribeTo(this, "CollisionStartWithHero");
 		theSwitchboard.SubscribeTo(this, "CollisionEndWithHero");
 	};
@@ -34,21 +36,38 @@ public:
 			this->p1->ApplyForce(Vector2(0.0f, 500.0f), Vector2(0.0f, 0.0f));
 			this->_jumping = 1;
 		}
-		if (m->GetMessageName() == "Forward") {
-			if (this->p1->GetBody()->GetLinearVelocity().x < 5)
-				this->p1->ApplyForce(Vector2(100.0f, 0.0f), Vector2(0.0f, 0.0f));
+		if (m->GetMessageName() == "ForPressed") {
+			this->_stopforward = 0;
+			MoveForward();
 		}
-		if (m->GetMessageName() == "Backward") {
-			if (this->p1->GetBody()->GetLinearVelocity().x > -5)
-				this->p1->ApplyForce(Vector2(-100.0f, 0.0f), Vector2(0.0f, 0.0f));
+		if (m->GetMessageName() == "BackPressed") {
+			this->_stopbackward = 0;
+			MoveBackward();
+		}
+		if (m->GetMessageName() == "ForReleased") {
+			this->_stopforward = 1;
+		}
+		if (m->GetMessageName() == "BackReleased") {
+			this->_stopbackward = 1;
 		}
 		if (m->GetMessageName() == "CollisionStartWithHero") {
 			this->_jumping = 0;
 		}
 	}
+	void	MoveBackward(void) {
+		while (this->p1->GetBody()->GetLinearVelocity().x > -5 && this->_stopbackward == 0)
+			this->p1->ApplyForce(Vector2(-100.0f, 0.0f), Vector2(0.0f, 0.0f));
+	}
+	void	MoveForward(void) {
+		while (this->p1->GetBody()->GetLinearVelocity().x < 5 && this->_stopforward == 0)
+			this->p1->ApplyForce(Vector2(100.0f, 0.0f), Vector2(0.0f, 0.0f));
+	}
+
 private:
 	PhysicsActor	*p1;
 	int				_jumping;
+	int				_stopforward;
+	int				_stopbackward;
 };
 
 int main(int argc, char* argv[])
