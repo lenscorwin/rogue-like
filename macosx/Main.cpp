@@ -35,12 +35,12 @@ public:
 			this->_jumping = 1;
 		}
 		if (m->GetMessageName() == "Forward") {
-			b2Vec2	curr(this->p1->GetBody()->GetLinearVelocity());
-			curr
-			this->p1->GetBody()->SetLinearVelocity(b2Vec2(1.0f, 0.0f));
+			if (this->p1->GetBody()->GetLinearVelocity().x < 5)
+				this->p1->ApplyForce(Vector2(100.0f, 0.0f), Vector2(0.0f, 0.0f));
 		}
 		if (m->GetMessageName() == "Backward") {
-			this->p1->ApplyForce(Vector2(-100.0f, 0.0f), Vector2(0.0f, 0.0f));
+			if (this->p1->GetBody()->GetLinearVelocity().x > -5)
+				this->p1->ApplyForce(Vector2(-100.0f, 0.0f), Vector2(0.0f, 0.0f));
 		}
 		if (m->GetMessageName() == "CollisionStartWithHero") {
 			this->_jumping = 0;
