@@ -2,7 +2,6 @@ language: cpp
 script: make
 before_install: 
      - sudo ./Angel/nix-prereqs.sh
-     - sudo apt-get upgrade g++
 notifications:
   webhooks:
     urls:
