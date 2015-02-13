@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 	theWorld.Initialize(1024, 768, "Test", false, false, false);
 	
 	//adds the default grid so you can more easily place Actors
-	theWorld.Add(new GridActor(), -1);
+	//theWorld.Add(new GridActor(), -1);
 	
 	//YOUR GAME SETUP CODE HERE
 	
