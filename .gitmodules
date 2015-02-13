@@ -1,6 +1,7 @@
-[submodule "Angel"]
-	path = Angel
-	url = http://github.com/Ne02ptzero/rogue-like
 [submodule "Windows"]
 	path = Windows
 	url = http://github.com/Ne02ptzero/rogue-like
+[submodule "Angel"]
+	path = Angel
+	url = http://github.com/Ne02ptzero/rogue-like
+	branch = angel

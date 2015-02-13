@@ -1,5 +1,6 @@
 ANGEL_DISABLE_FMOD := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_FMOD[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' Angel/AngelConfig.h)
 ANGEL_DISABLE_DEVIL := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_DEVIL[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' Angel/AngelConfig.h)
+<<<<<<< HEAD
 CXX = g++ -std=c++11
 TARGET = rogue-like
 ANGEL_FLAGS = -D ANGEL_RELEASE
