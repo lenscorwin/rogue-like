@@ -18,15 +18,52 @@
  */
 
 /**
- * File: main.hpp
- * Creation: 2015-02-13 07:20
+ * File: Maps.hpp
+ * Creation: 2015-02-13 08:03
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
+#ifndef __Maps__
+# define __Maps__
 
-#ifndef __MAIN__
-# define __MAIN__
+# include <json/json.h>
+# include <dirent.h>
+# include <iostream>
+# include <string>
+# include <fstream>
+# include <streambuf>
+# include <sstream>
+# include <list>
+# include <string>
+# include <vector>
+# include "Elements.hpp"
 
-# define NAME "rogue-like"
+typedef struct		s_map {
+	int								id;
+	std::string						name;
+	std::string						world;
+	std::string						callbackBegin;
+	std::string						callbackEnd;
+	std::list<Elements *>			elements;
+	std::vector<std::vector<int> >	map;
+
+}					t_map;
+
+class Maps {
+	public:
+		Maps();
+		Maps(std::string directory);
+		~Maps();
+
+		void	readMaps(void);
+
+	private:
+		void	_getMap(void);
+
+		std::string			_directory;
+		Json::Value			_root;
+		Json::Reader		_reader;
+		std::list<t_map>	_maps;
+};
 
 #endif

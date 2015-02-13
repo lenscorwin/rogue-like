@@ -18,15 +18,31 @@
  */
 
 /**
- * File: main.hpp
- * Creation: 2015-02-13 07:20
+ * File: Elements.cpp
+ * Creation: 2015-02-13 07:39
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
+# include "../inc/Elements.hpp"
 
-#ifndef __MAIN__
-# define __MAIN__
+/**
+ * Basic constructor
+ */
+Elements::Elements(int id) : _id(id) {
+	return ;
+}
 
-# define NAME "rogue-like"
+/**
+ * Basic deconstructor
+ */
+Elements::~Elements(void) {
+	return ;
+}
 
-#endif
+void	Elements::addAttribute(std::string name, std::string value) {
+	this->_attributes[name] = value;
+}
+
+std::string	Elements::getAttribute(std::string name) {
+	return this->_attributes[name];
+}

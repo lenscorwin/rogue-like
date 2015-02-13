@@ -1,3 +1,4 @@
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,15 +19,27 @@
  */
 
 /**
- * File: main.hpp
- * Creation: 2015-02-13 07:20
+ * File: Elements.hpp
+ * Creation: 2015-02-13 07:39
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
+#ifndef __Elements__
+# define __Elements__
+# include <map>
+# include <string>
 
-#ifndef __MAIN__
-# define __MAIN__
+class Elements {
+	public:
+		Elements(int id);
+		~Elements();
 
-# define NAME "rogue-like"
+		void 	addAttribute(std::string name, std::string value);
+		std::string getAttribute(std::string name);
 
+	private:
+		int									_id;
+		std::map<std::string, std::string>	_attributes;
+
+};
 #endif

@@ -18,15 +18,32 @@
  */
 
 /**
- * File: main.hpp
+ * File: Game.hpp
  * Creation: 2015-02-13 07:20
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
+#ifndef __Game__
+# define __Game__
 
-#ifndef __MAIN__
-# define __MAIN__
+//# include "Elements.hpp"
+# include "main.hpp"
+# include "Maps.hpp"
+# include "../../Angel/Angel.h"
 
-# define NAME "rogue-like"
+class Game {
+
+	public:
+		Game();
+		Game(unsigned int width, unsigned int height);
+		~Game();
+
+		void	grid(void);
+		void	start(void);
+		void	readMaps(void);
+
+		//Elements	*elements;
+		Maps		*maps;
+};
 
 #endif
