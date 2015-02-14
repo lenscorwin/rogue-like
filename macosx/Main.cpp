@@ -6,9 +6,6 @@ public:
 	virtual const String	GetClassName(void) {
 		return "HeroActor";
 	};
-	void					SetBody(b2Body *body) {
-		this->_physBody = body;
-	};
 	int					touchingGround;
 	int					touchingWall;
 	int					jumping;
@@ -46,6 +43,7 @@ public:
 				if (static_cast<PhysicsActor*>(*it)->GetBody() == contact->GetFixtureB()->GetBody()) {
 					//Touching ground
 					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1) {
+						hero->jumping = 2;
 						int		found = 0;
 						if (hero->grounds.size() > 0)
 							contact->SetEnabled(false);
@@ -56,7 +54,6 @@ public:
 							}
 						}
 						if (found == 0) {
-							hero->jumping = 2;
 							hero->grounds.push_back(contact->GetFixtureB()->GetBody());
 							std::cout << "Ground Touched" << hero->grounds.size() << std::endl;
 						}
@@ -88,9 +85,7 @@ public:
 			for (ActorSet::iterator it = actor.begin(); it != actor.end(); it++) {
 				if (static_cast<PhysicsActor*>(*it)->GetBody() == contact->GetFixtureB()->GetBody()) {
 					//if contactB == ground - TODO
-					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1) {
-//						(hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x + 1.05 ||
-//						 hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x - 1.05)) {
+					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1 && hero->grounds.size() >= 1) {
 						//Leaving the ground
 						hero->grounds.remove(contact->GetFixtureB()->GetBody());
 						if (hero->grounds.size() == 0) {
@@ -130,27 +125,16 @@ public:
 		this->p1 = new HeroActor();
 		this->p1->SetPosition(-3.0f, 5.0f);
 		this->p1->SetColor(0,0,0);
+		this->p1->SetSize(1);
 		this->p1->SetDrawShape(ADS_Square);
 		this->p1->SetName("Hero");
-		this->p1->SetShapeType(SHAPETYPE_HERO);
+		this->p1->SetShapeType(PhysicsActor::SHAPETYPE_HERO);
 		this->p1->SetDensity(1.0f);
 		this->p1->SetFriction(1.0f);
-		this->p1->SetRestitution(1.0f);
+		this->p1->SetRestitution(0.0f);
 		this->p1->SetFixedRotation(true);
 		this->p1->Tag("hero");
 
-// 		b2PolygonShape heroShape;
-// 		b2Vec2 vertices[8];
-// 		vertices[0].Set(-0.25, 0.4);
-// 		vertices[1].Set(-0.4, 0.25);
-// 		vertices[2].Set(-0.4, -0.25);
-// 		vertices[3].Set(-0.25, -0.4);
-// 		vertices[4].Set(0.25, -0.4);
-// 		vertices[5].Set(0.4, -0.25);
-// 		vertices[6].Set(0.4, 0.25);
-// 		vertices[7].Set(0.25, 0.4);
-
-// 		heroShape.Set(vertices, 8);
 		this->p1->InitPhysics();
 		theWorld.Add(this->p1);
 
@@ -196,7 +180,7 @@ public:
 	void	ReceiveMessage(Message *m) {
 		if (m->GetMessageName() == "Jump" && this->p1->jumping > 0) {
 			this->p1->ApplyForce(Vector2(0.0f, 500.0f), Vector2(0.0f, 0.0f));
-			if (p1->touchingGround == 0)
+			if (p1->grounds.size() == 0)
 				p1->jumping--;
 		}
 
