@@ -13,6 +13,23 @@ public:
 	int					orientation;
 	int					up;
 	bool				canMove;
+	bool				attacking;
+	bool				firing;
+	bool				smashing;
+};
+
+class SmashActor: public PhysicsActor {
+	virtual const String GetClassName(void) {
+		return "SmashActor";
+	};
+};
+
+class ProjectileActor: public PhysicsActor {
+public:
+	virtual const String	GetClassName(void) {
+		return "ProjectileActor";
+	};
+	int		x;
 };
 
 class MouseDebugger: public MouseListener {
@@ -35,9 +52,12 @@ public:
 class rContactListener: public b2ContactListener {
 public:
 	void	BeginContact(b2Contact *contact) {
-		HeroActor*		hero = static_cast<HeroActor*>(Actor::GetNamed("Hero"));
-		PhysicsActor*	weapon = static_cast<PhysicsActor*>(Actor::GetNamed("Weapon"));
-		ActorSet		actor = theTagList.GetObjectsTagged("physics");
+		HeroActor*			hero = static_cast<HeroActor*>(Actor::GetNamed("Hero"));
+		PhysicsActor*		weapon = static_cast<PhysicsActor*>(Actor::GetNamed("Weapon"));
+		ProjectileActor*	projectile = static_cast<ProjectileActor*>(Actor::GetNamed("Projectile"));
+		SmashActor*			smashLeft = static_cast<SmashActor*>(Actor::GetNamed("Smashleft"));
+		SmashActor*			smashRight = static_cast<SmashActor*>(Actor::GetNamed("Smashright"));
+		ActorSet			actor = theTagList.GetObjectsTagged("physics");
 
 		if (hero->GetBody() == contact->GetFixtureA()->GetBody()) {
 // 			std::cout << "------------ BEGIN -------------" << std::endl;
@@ -47,6 +67,10 @@ public:
 				if (static_cast<PhysicsActor*>(*it)->GetBody() == contact->GetFixtureB()->GetBody()) {
 					//Case ground/wall
 					if ((*it)->IsTagged("ground") == true) {
+						if (hero->smashing == true) {
+							theSwitchboard.Broadcast(new Message("SmashAround"));
+							hero->smashing = false;
+						}
 						if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1) {
 							hero->jumping = 2;
 							int		found = 0;
@@ -81,6 +105,8 @@ public:
 							hero->ApplyLinearImpulse(Vector2(-20, 20), Vector2(0, 0));
 						else
 							hero->ApplyLinearImpulse(Vector2(20, 20), Vector2(0, 0));
+						if (hero->smashing == true)
+							hero->smashing = false;
 					}
 				}
 //			std::cout << "------------- /BEGIN --------- " << std::endl;
@@ -89,18 +115,53 @@ public:
 		else if  (hero->GetBody() == contact->GetFixtureB()->GetBody()) {
 //			std::cout << "Hero in B" << std::endl;
 		}
-		else if (weapon) {
-			if (weapon->GetBody() == contact->GetFixtureB()->GetBody())
+		if (weapon && (weapon->GetBody() == contact->GetFixtureB()->GetBody() || weapon->GetBody() == contact->GetFixtureA()->GetBody())) {
+			if (weapon->GetBody() == contact->GetFixtureB()->GetBody() && contact->GetFixtureA()->GetBody() != hero->GetBody())
 				WeaponCollision(contact->GetFixtureA()->GetBody(), weapon);
-			else if (weapon->GetBody() == contact->GetFixtureA()->GetBody())
+			else if (weapon->GetBody() == contact->GetFixtureA()->GetBody() && contact->GetFixtureB()->GetBody() != hero->GetBody())
 				WeaponCollision(contact->GetFixtureB()->GetBody(), weapon);
 		}
+
+		if (smashLeft && (smashLeft->GetBody() == contact->GetFixtureB()->GetBody() || smashLeft->GetBody() == contact->GetFixtureA()->GetBody())) {
+			if (smashLeft->GetBody() == contact->GetFixtureB()->GetBody() && contact->GetFixtureA()->GetBody() != hero->GetBody())
+				SmashCollision(contact->GetFixtureA()->GetBody(), smashLeft);
+			else if (smashLeft->GetBody() == contact->GetFixtureA()->GetBody() && contact->GetFixtureB()->GetBody() != hero->GetBody())
+				SmashCollision(contact->GetFixtureB()->GetBody(), smashLeft);
+		}
+		if (smashRight && (smashRight->GetBody() == contact->GetFixtureB()->GetBody() || smashRight->GetBody() == contact->GetFixtureA()->GetBody())) {
+			if (smashRight->GetBody() == contact->GetFixtureB()->GetBody() && contact->GetFixtureA()->GetBody() != hero->GetBody())
+				SmashCollision(contact->GetFixtureA()->GetBody(), smashRight);
+			else if (smashRight->GetBody() == contact->GetFixtureA()->GetBody() && contact->GetFixtureB()->GetBody() != hero->GetBody())
+				SmashCollision(contact->GetFixtureB()->GetBody(), smashRight);
+		}
+		if (projectile && (contact->GetFixtureA()->GetBody() == projectile->GetBody() || contact->GetFixtureB()->GetBody() == projectile->GetBody())) {
+			if (contact->GetFixtureA()->GetBody() == projectile->GetBody())
+				ProjectileCollision(projectile, contact->GetFixtureB()->GetBody());
+			else if (contact->GetFixtureB()->GetBody() == projectile->GetBody())
+				ProjectileCollision(projectile, contact->GetFixtureA()->GetBody());
+		}
 	};
+
+	void	SmashCollision(b2Body *contact, SmashActor* smash) {
+		if (smash->GetBody()->GetWorldCenter().x > contact->GetWorldCenter().x)
+			contact->ApplyLinearImpulse(b2Vec2(-10, 10), contact->GetWorldCenter());
+		if (smash->GetBody()->GetWorldCenter().x < contact->GetWorldCenter().x)
+			contact->ApplyLinearImpulse(b2Vec2(10, 10), contact->GetWorldCenter());
+	}
+
 	void	WeaponCollision(b2Body *contact, PhysicsActor* weapon) {
 		if (weapon->GetBody()->GetWorldCenter().x > contact->GetWorldCenter().x)
 			contact->ApplyLinearImpulse(b2Vec2(-20, 20), contact->GetWorldCenter());
 		if (weapon->GetBody()->GetWorldCenter().x < contact->GetWorldCenter().x)
 			contact->ApplyLinearImpulse(b2Vec2(20, 20), contact->GetWorldCenter());
+	}
+
+	void	ProjectileCollision( ProjectileActor *proj, b2Body *contact) {
+		if (proj->GetBody()->GetWorldCenter().x > contact->GetWorldCenter().x)
+			contact->ApplyLinearImpulse(b2Vec2(-1, 1), contact->GetWorldCenter());
+		if (proj->GetBody()->GetWorldCenter().x < contact->GetWorldCenter().x)
+			contact->ApplyLinearImpulse(b2Vec2(1, 1), contact->GetWorldCenter());
+		theSwitchboard.Broadcast(new Message("DeleteRanged"));
 	}
 
 	void	EndContact(b2Contact *contact) {
@@ -154,6 +215,7 @@ public:
 		this->p1->SetSize(1);
 		this->p1->SetDrawShape(ADS_Square);
 		this->p1->SetName("Hero");
+		this->p1->attacking = false;
 		this->p1->SetShapeType(PhysicsActor::SHAPETYPE_HERO);
 		this->p1->SetDensity(1.0f);
 		this->p1->SetFriction(1.0f);
@@ -216,14 +278,13 @@ public:
 		theSwitchboard.SubscribeTo(this, "ForReleased");
 		theSwitchboard.SubscribeTo(this, "BackReleased");
 		theSwitchboard.SubscribeTo(this, "Smash");
-		theSwitchboard.SubscribeTo(this, "Attack");
+		theSwitchboard.SubscribeTo(this, "SmashAround");
+		theSwitchboard.SubscribeTo(this, "MeleeAttack");
+		theSwitchboard.SubscribeTo(this, "RangedAttack");
 		theSwitchboard.SubscribeTo(this, "CanMove");
-		theSwitchboard.SubscribeTo(this, "CollisionStartWithHero");
-		theSwitchboard.SubscribeTo(this, "CollisionEndWithHero");
-		theSwitchboard.SubscribeTo(this, "CollisionStartWithWeapon");
-		theSwitchboard.SubscribeTo(this, "CollisionStartWithVictim");
-		theSwitchboard.SubscribeTo(this, "CollisionStart:Hero.Victim");
 		theSwitchboard.SubscribeTo(this, "DeleteWeapon");
+		theSwitchboard.SubscribeTo(this, "DeleteSmash");
+		theSwitchboard.SubscribeTo(this, "DeleteRanged");
 	};
 
 	~Hero(void) {
@@ -239,11 +300,82 @@ public:
 		}
 
 		if (m->GetMessageName() == "Smash") {
-			if (this->p1->canMove == 1)
-				this->p1->ApplyLinearImpulse(Vector2(0.0f, -1000.0f), Vector2(0.0f, 0.0f));
+			if (this->p1->canMove == 1) {
+				if (this->p1->grounds.size() == 0)
+					this->p1->smashing = true;
+				this->p1->ApplyLinearImpulse(Vector2(0.0f, -100.0f), Vector2(0.0f, 0.0f));
+			}
 		}
 
-		if (m->GetMessageName() == "Attack") {
+		if (m->GetMessageName() == "DeleteSmash") {
+			theWorld.Remove(this->smashLeft);
+			theWorld.Remove(this->smashRight);
+			delete this->smashLeft;
+			delete this->smashRight;
+		}
+
+		if (m->GetMessageName() == "SmashAround") {
+			this->smashLeft = new SmashActor();
+			this->smashLeft->SetPosition(this->p1->GetBody()->GetWorldCenter().x - 1, this->p1->GetBody()->GetWorldCenter().y);
+			this->smashLeft->SetColor(0,1,1);
+			this->smashLeft->SetSize(1);
+			this->smashLeft->SetDrawShape(ADS_Square);
+			this->smashLeft->SetName("Smashleft");
+			this->smashLeft->SetShapeType(PhysicsActor::SHAPETYPE_BOX);
+			this->smashLeft->SetDensity(0.0f);
+			this->smashLeft->SetFriction(0.0f);
+			this->smashLeft->SetRestitution(0.0f);
+			this->smashLeft->SetFixedRotation(true);
+			this->smashLeft->Tag("smashleft, smash, sensor");
+			this->smashLeft->SetIsSensor(true);
+			this->smashLeft->InitPhysics();
+			theWorld.Add(this->smashLeft);
+
+			this->smashRight = new SmashActor();
+			this->smashRight->SetPosition(this->p1->GetBody()->GetWorldCenter().x + 1, this->p1->GetBody()->GetWorldCenter().y);
+			this->smashRight->SetColor(0,1,1);
+			this->smashRight->SetSize(1);
+			this->smashRight->SetDrawShape(ADS_Square);
+			this->smashRight->SetName("Smashright");
+			this->smashRight->SetShapeType(PhysicsActor::SHAPETYPE_BOX);
+			this->smashRight->SetDensity(0.0f);
+			this->smashRight->SetFriction(0.0f);
+			this->smashRight->SetRestitution(0.0f);
+			this->smashRight->SetFixedRotation(true);
+			this->smashRight->Tag("smashright, smash, sensor");
+			this->smashRight->SetIsSensor(true);
+			this->smashRight->InitPhysics();
+			theWorld.Add(this->smashRight);
+
+			theSwitchboard.DeferredBroadcast(new Message("DeleteSmash"), 0.2f);
+		}
+
+		if (m->GetMessageName() == "RangedAttack") {
+			if (this->p1->canMove == false || this->p1->firing == true)
+				return;
+			this->p1->firing = true;
+			this->projectile = new ProjectileActor();
+			this->projectile->SetPosition(this->p1->GetBody()->GetWorldCenter().x + this->p1->orientation, this->p1->GetBody()->GetWorldCenter().y + this->p1->up);
+			this->projectile->SetColor(0,0,1);
+			this->projectile->SetSize(0.5);
+			this->projectile->SetDrawShape(ADS_Square);
+			this->projectile->SetName("Projectile");
+			this->projectile->SetShapeType(PhysicsActor::SHAPETYPE_BOX);
+			this->projectile->SetDensity(1.0f);
+			this->projectile->SetFriction(0.0f);
+			this->projectile->SetRestitution(0.0f);
+			this->projectile->SetFixedRotation(true);
+			this->projectile->Tag("projectile");
+			this->projectile->InitPhysics();
+			this->projectile->GetBody()->ApplyLinearImpulse(b2Vec2((40 * this->p1->orientation), (40 * this->p1->up)), this->projectile->GetBody()->GetWorldCenter());
+			this->projectile->GetBody()->SetBullet(true);
+			theWorld.Add(this->projectile);
+		}
+
+		if (m->GetMessageName() == "MeleeAttack") {
+			if (this->p1->canMove == false || this->p1->attacking == true)
+				return;
+			this->p1->attacking = true;
 			this->weapon = new PhysicsActor();
 			this->weapon->SetPosition(this->p1->GetBody()->GetWorldCenter().x + this->p1->orientation, this->p1->GetBody()->GetWorldCenter().y +this->p1->up);
 			this->weapon->SetColor(0,0,1);
@@ -252,23 +384,30 @@ public:
 			this->weapon->SetName("Weapon");
 			this->weapon->SetShapeType(PhysicsActor::SHAPETYPE_BOX);
 			this->weapon->SetDensity(0.0f);
-			this->weapon->SetFriction(1.0f);
-			this->weapon->SetRestitution(0.3f);
+			this->weapon->SetFriction(0.0f);
+			this->weapon->SetRestitution(0.0f);
 			this->weapon->SetFixedRotation(true);
-			this->weapon->Tag("weapon");
+			this->weapon->Tag("weapon, sensor");
 			this->weapon->SetIsSensor(true);
 			this->weapon->InitPhysics();
 			theWorld.Add(this->weapon);
+			theSwitchboard.DeferredBroadcast(new Message("DeleteWeapon"), 0.2f);
 		}
 
 		if (m->GetMessageName() == "DeleteWeapon") {
 			if (this->weapon) {
 				theWorld.Remove(this->weapon);
 				delete this->weapon;
+				this->p1->attacking = false;
 			}
 		}
 
-		if (m->GetMessageName() == "CollisionStart:Hero.Ground") {
+		else if (m->GetMessageName() == "DeleteRanged") {
+			if (this->p1->firing == true) {
+				theWorld.Remove(this->projectile);
+				delete this->projectile;
+				this->p1->firing = false;
+			}
 		}
 
 		else if (m->GetMessageName() == "ForPressed" || m->GetMessageName() == "ForReleased") {
@@ -312,10 +451,13 @@ public:
 
 private:
 	std::list<GroundActor*> floor;
-	HeroActor		*p1;
-	PhysicsActor	*weapon;
-	PhysicsActor	*map;
-	PhysicsActor	*victim;
+	HeroActor						*p1;
+	PhysicsActor					*weapon;
+	PhysicsActor					*map;
+	PhysicsActor					*victim;
+	ProjectileActor					*projectile;
+	SmashActor						*smashLeft;
+	SmashActor						*smashRight;
 };
 
 int main(int argc, char* argv[])
