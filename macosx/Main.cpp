@@ -3,12 +3,16 @@
 
 class HeroActor: public PhysicsActor {
 public:
-	virtual const String	GetClassName() {
+	virtual const String	GetClassName(void) {
 		return "HeroActor";
-	}
-	int				touchingGround;
-	int				touchingWall;
-	int				jumping;
+	};
+	void					SetBody(b2Body *body) {
+		this->_physBody = body;
+	};
+	int					touchingGround;
+	int					touchingWall;
+	int					jumping;
+	std::list<b2Body*>	grounds;
 };
 
 class MouseDebugger: public MouseListener {
@@ -32,7 +36,7 @@ class rContactListener: public b2ContactListener {
 public:
 	void	BeginContact(b2Contact *contact) {
 		HeroActor*		hero = static_cast<HeroActor*>(Actor::GetNamed("Hero"));
-		ActorSet		actor = theTagList.GetObjectsTagged("actor");
+		ActorSet		actor = theTagList.GetObjectsTagged("physics");
 
 		if (hero->GetBody() == contact->GetFixtureA()->GetBody()) {
 			std::cout << "------------ BEGIN -------------" << std::endl;
@@ -41,26 +45,30 @@ public:
 			for (ActorSet::iterator it = actor.begin(); it != actor.end(); it++) {
 				if (static_cast<PhysicsActor*>(*it)->GetBody() == contact->GetFixtureB()->GetBody()) {
 					//Touching ground
-					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1 &&
-						(hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x + 1.05 ||
-						 hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x - 1.05)) {
-						hero->touchingGround++;
-						hero->jumping = 2;
-						if (hero->touchingGround > 1) {
+					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1) {
+						int		found = 0;
+						if (hero->grounds.size() > 0)
 							contact->SetEnabled(false);
+						for (std::list<b2Body*>::iterator it = hero->grounds.begin(); it != hero->grounds.end(); it++) {
+							if ((*it) == contact->GetFixtureB()->GetBody()) {
+								found = 1;
+								contact->SetEnabled(false);
+							}
 						}
-						std::cout << "Ground Touched" << ": " << hero->touchingGround << std::endl;
+						if (found == 0) {
+							hero->jumping = 2;
+							hero->grounds.push_back(contact->GetFixtureB()->GetBody());
+							std::cout << "Ground Touched" << hero->grounds.size() << std::endl;
+						}
 					}
 					//Touching Wall
-					else if (hero->GetBody()->GetWorldCenter().y < contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1) {
+					else {
 						hero->touchingWall++;
-//						if (hero->touchingWall > 1) {
-//							contact->SetEnabled(false);
-//						}
-						std::cout << "Wall Touched" << ": " << hero->touchingWall << std::endl;
+						if (hero->touchingWall > 1) {
+							contact->SetEnabled(false);
+						}
+						std::cout << "Wall Touched" << hero->touchingWall << std::endl;
 					}
-					else
-						std::cout << "Contact ignored" << std::endl;
 				}
 			}
 			std::cout << "------------- /BEGIN --------- " << std::endl;
@@ -71,7 +79,7 @@ public:
 
 	void	EndContact(b2Contact *contact) {
 		HeroActor	*hero = static_cast<HeroActor*>(Actor::GetNamed("Hero"));
-		ActorSet	actor = theTagList.GetObjectsTagged("actor");
+		ActorSet	actor = theTagList.GetObjectsTagged("physics");
 
 		if (hero->GetBody() == contact->GetFixtureA()->GetBody()) {
 			std::cout << "------------ END -------------" << std::endl;
@@ -80,21 +88,19 @@ public:
 			for (ActorSet::iterator it = actor.begin(); it != actor.end(); it++) {
 				if (static_cast<PhysicsActor*>(*it)->GetBody() == contact->GetFixtureB()->GetBody()) {
 					//if contactB == ground - TODO
-					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1 &&
-						(hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x + 1.05 ||
-						 hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x - 1.05)) {
+					if (hero->GetBody()->GetWorldCenter().y > contact->GetFixtureB()->GetBody()->GetWorldCenter().y + 1) {
+//						(hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x + 1.05 ||
+//						 hero->GetBody()->GetWorldCenter().x > contact->GetFixtureB()->GetBody()->GetWorldCenter().x - 1.05)) {
 						//Leaving the ground
-						std::cout << "Leaving ground" << std::endl;
-
-						hero->touchingGround--;
-						if (hero->touchingGround <= 0) {
+						hero->grounds.remove(contact->GetFixtureB()->GetBody());
+						if (hero->grounds.size() == 0) {
 							hero->jumping--;
-							hero->touchingGround = 0;
 						}
+						std::cout << "Leaving ground: " << hero->grounds.size() << std::endl;
 					}
 					else if (hero->touchingWall > 0) {
-						std::cout << "Leaving wall" << std::endl;
 						hero->touchingWall--;
+						std::cout << "Leaving wall:" << hero->touchingWall << std::endl;
 					}
 				}
 			}
@@ -123,17 +129,29 @@ public:
 
 		this->p1 = new HeroActor();
 		this->p1->SetPosition(-3.0f, 5.0f);
-		this->p1->SetDrawShape(ADS_Square);
-		this->p1->SetSize(1.0f);
 		this->p1->SetColor(0,0,0);
+		this->p1->SetDrawShape(ADS_Square);
+		this->p1->SetName("Hero");
+		this->p1->SetShapeType(SHAPETYPE_HERO);
 		this->p1->SetDensity(1.0f);
 		this->p1->SetFriction(1.0f);
-		this->p1->SetName("Hero");
-		this->p1->SetRestitution(0.0f);
-//		this->p1->SetSprite("Resources/Images/kappa.png");
-		this->p1->SetShapeType(PhysicsActor::SHAPETYPE_BOX);
+		this->p1->SetRestitution(1.0f);
+		this->p1->SetFixedRotation(true);
+		this->p1->Tag("hero");
+
+// 		b2PolygonShape heroShape;
+// 		b2Vec2 vertices[8];
+// 		vertices[0].Set(-0.25, 0.4);
+// 		vertices[1].Set(-0.4, 0.25);
+// 		vertices[2].Set(-0.4, -0.25);
+// 		vertices[3].Set(-0.25, -0.4);
+// 		vertices[4].Set(0.25, -0.4);
+// 		vertices[5].Set(0.4, -0.25);
+// 		vertices[6].Set(0.4, 0.25);
+// 		vertices[7].Set(0.25, 0.4);
+
+// 		heroShape.Set(vertices, 8);
 		this->p1->InitPhysics();
-		this->p1->GetBody()->SetFixedRotation(true);
 		theWorld.Add(this->p1);
 
 
@@ -151,7 +169,7 @@ public:
 			(*it)->SetSize(1);
 			(*it)->SetDensity(0.0f);
 			(*it)->SetColor(1, 0, 0);
-			(*it)->Tag("Floor, actor");
+			(*it)->Tag("ground, Physics");
 			(*it)->SetFriction(1.0f);
 			(*it)->SetRestitution(0.0f);
 			(*it)->SetShapeType(PhysicsActor::SHAPETYPE_BOX);
@@ -215,7 +233,7 @@ private:
 
 int main(int argc, char* argv[])
 {
-	theWorld.Initialize(1920, 1024, "Test", false, false, false);
+	theWorld.Initialize(1920, 1024, "La soeur de ryad", false, false, false);
 	theWorld.Add(new GridActor(), -1);
 
 	theWorld.SetupPhysics();

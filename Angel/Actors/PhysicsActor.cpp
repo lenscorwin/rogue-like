@@ -141,6 +141,22 @@ void PhysicsActor::InitPhysics()
 		circle.m_radius = 0.5f*_size.X;
 		shape = &circle;
 	}
+	/* CODE MODIFIED BY NOICH */
+	else if (_shapeType == SHAPETYPE_HERO)
+	{
+		b2Vec2 vertices[8];
+		vertices[0].Set(-0.45, 0.5);
+		vertices[1].Set(-0.5, 0.45);
+		vertices[2].Set(-0.5, -0.45);
+		vertices[3].Set(-0.45, -0.5);
+		vertices[4].Set(0.45, -0.5);
+		vertices[5].Set(0.5, -0.45);
+		vertices[6].Set(0.5, 0.45);
+		vertices[7].Set(0.45, 0.5);
+		box.Set(vertices, 8);
+		shape = &box;
+	}
+	/* END OF CODE */
 	else
 	{
 		sysLog.Log("ERROR: Invalid shape type given.");

@@ -68,6 +68,7 @@ public:
 	{
 		SHAPETYPE_BOX,
 		SHAPETYPE_CIRCLE,
+		SHAPETYPE_HERO,
 	};
 	
 	/**
