@@ -179,13 +179,13 @@ public:
 
 	void	ReceiveMessage(Message *m) {
 		if (m->GetMessageName() == "Jump" && this->p1->jumping > 0) {
-			this->p1->ApplyForce(Vector2(0.0f, 500.0f), Vector2(0.0f, 0.0f));
+			this->p1->ApplyLinearImpulse(Vector2(0.0f, 30.0f), Vector2(0.0f, 0.0f));
 			if (p1->grounds.size() == 0)
 				p1->jumping--;
 		}
 
 		if (m->GetMessageName() == "Smash") {
-			this->p1->ApplyForce(Vector2(0.0f, -10000.0f), Vector2(0.0f, 0.0f));
+			this->p1->ApplyLinearImpulse(Vector2(0.0f, -1000.0f), Vector2(0.0f, 0.0f));
 		}
 
 		if (m->GetMessageName() == "ForPressed" || m->GetMessageName() == "ForReleased") {
@@ -198,13 +198,13 @@ public:
 
  	void	MoveForward(void) {
  		if (this->p1->GetBody()->GetLinearVelocity().x < 5) {
- 			this->p1->ApplyForce(Vector2(50.0f, 0.0f), Vector2(0.0f, 0.0f));
+ 			this->p1->ApplyLinearImpulse(Vector2(8.0f, 0.0f), Vector2(0.0f, 0.0f));
 		}
  	};
 
  	void	MoveBackward(void) {
  		if (this->p1->GetBody()->GetLinearVelocity().x > -5) {
- 			this->p1->ApplyForce(Vector2(-50.0f, 0.0f), Vector2(0.0f, 0.0f));
+ 			this->p1->ApplyLinearImpulse(Vector2(-8.0f, 0.0f), Vector2(0.0f, 0.0f));
 		}
  	};
 
@@ -220,7 +220,7 @@ int main(int argc, char* argv[])
 	theWorld.Initialize(1920, 1024, "La soeur de ryad", false, false, false);
 	theWorld.Add(new GridActor(), -1);
 
-	theWorld.SetupPhysics();
+	theWorld.SetupPhysics(Vector2(0, -80));
 	theWorld.SetSideBlockers(true, 0.7f);
 
 	rContactListener cListen;
