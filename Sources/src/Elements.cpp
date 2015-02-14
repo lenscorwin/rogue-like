@@ -26,10 +26,25 @@
 # include "../inc/Elements.hpp"
 
 /**
- * Basic constructor
+ * Main constructor
  */
-Elements::Elements(int id) : _id(id) {
+Elements::Elements(void) : PhysicsActor() {
 	return ;
+}
+
+/**
+ * Main constructor
+ */
+Elements::Elements(int id) : _id(id), PhysicsActor() {
+	return ;
+}
+
+/**
+ * Copy constructor
+ * @param: obj (Elements & obj)
+ */
+Elements::Elements(Elements & obj) : PhysicsActor() {
+	this->_attributes = obj.getAttributes();
 }
 
 /**
@@ -39,10 +54,67 @@ Elements::~Elements(void) {
 	return ;
 }
 
+/**
+ * Add an attribute to the Element
+ * @param: name (std::string)
+ * @param: value (std::string)
+ */
 void	Elements::addAttribute(std::string name, std::string value) {
 	this->_attributes[name] = value;
 }
 
+/**
+ * Get an attribute value
+ * @param: name (std::string)
+ * @return: this->_attributes[name]
+ */
 std::string	Elements::getAttribute(std::string name) {
-	return this->_attributes[name];
+	if (this->_attributes.find(name) != this->_attributes.end())
+		return this->_attributes[name];
+	return "";
 }
+
+/**
+ * Display the Element on the screen
+ */
+void	Elements::display(void) {
+	this->SetPosition(this->_XStartPos, this->_YStartPos);
+	this->Tag(this->getAttribute("type"));
+	std::cout << "Add an object at: " << this->_XStartPos << ", " << this->_YStartPos << std::endl;
+	this->Tag(this->getAttribute("type"));
+	if (this->getAttribute("sprite") != "")
+		this->SetSprite(this->getAttribute("sprite"));
+	else
+		this->SetColor(0, 0, 0, 0);
+	this->SetSize(1.0f);
+	this->SetDrawShape(ADS_Square);
+   /* if (this->getAttribute("density") != "")*/
+		//this->SetDensity(std::atof(this->getAttribute("density").c_str()));
+	//else
+		//this->SetDensity(0.0f);
+	//if (this->getAttribute("friction") != "")
+		//this->SetDensity(std::atof(this->getAttribute("friction").c_str()));
+	//else
+		//this->SetDensity(0.0f);
+	//if (this->getAttribute("density") != "")
+		//this->SetDensity(std::atof(this->getAttribute("density").c_str()));
+	//else
+		//this->SetDensity(0.0f);
+
+	if (this->getAttribute("type") == "wall" || this->getAttribute("type") == "ground") {
+		this->SetDensity(0);
+		this->SetFriction(1);
+		this->SetRestitution(0);
+	}
+	if (this->getAttribute("physic") != "")
+		this->InitPhysics();
+	theWorld.Add(this);
+}
+
+/* SETTERS */
+
+void	Elements::setXStart(float X) { this->_XStartPos = X; };
+void	Elements::setYStart(float Y) { this->_YStartPos = Y; };
+
+/* GETTERS */
+std::map<std::string, std::string>	Elements::getAttributes(void) { return this->_attributes; };

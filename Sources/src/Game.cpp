@@ -32,6 +32,7 @@
  */
 Game::Game(void) {
 	theWorld.Initialize(1024, 768, NAME);
+	theWorld.SetupPhysics();
 	//this->elements = new Elements();
 	this->maps = new Maps("Maps/");
 	return ;
@@ -44,6 +45,7 @@ Game::Game(void) {
  */
 Game::Game(unsigned int width, unsigned int height) {
 	theWorld.Initialize(width, height, NAME);
+	theWorld.SetupPhysics();
 	//this->elements = new Elements();
 	this->maps = new Maps("Maps/");
 }
@@ -75,4 +77,57 @@ void	Game::start(void) {
  */
 void	Game::readMaps(void) {
 	this->maps->readMaps();
+}
+
+/**
+ * Display a map
+ * @param: map (t_map)
+ */
+void	Game::displayMap(t_map map) {
+	std::vector<std::vector<int> >::iterator	i;
+	std::vector<int>::iterator			v;
+	float								x = 0.0f, y = -10.0f;
+	Elements							*block;
+
+	for (i = map.map.begin(); i != map.map.end(); i++, x -= 1.0f) {
+		for (y = -10.0f, v = i->begin(); v != i->end(); v++, y += 1.0f) {
+			if ((*v) == 0)
+				block = new Elements();
+			else
+				block = new Elements(*(map.elements[(*v)]));
+			block->setXStart(y);
+			block->setYStart(x);
+			block->display();
+			if (block->getAttribute("attribute") == "start") {
+				this->beginXHero = y;
+				this->beginYHero = x;
+			}
+		}
+	}
+}
+
+/**
+ * Display the first map
+ */
+void	Game::initMap(void) {
+	std::list<t_map> 	maps = this->maps->getFormattedMaps();
+	std::list<t_map>::iterator	it;
+
+	for (it = maps.begin(); it != maps.end(); it++) {
+		if ((*it).id == 1)
+			this->displayMap(*it);
+		std::cout << (*it).id << std::endl;
+	}
+}
+
+void	Game::test(b2Contact *b) {};
+
+/**
+ * Display the Hero
+ * @param: Hero (Elements &)
+ */
+void	Game::displayHero(Elements & Hero) {
+	Hero.setXStart(this->beginXHero);
+	Hero.setYStart(this->beginYHero);
+	Hero.display();
 }

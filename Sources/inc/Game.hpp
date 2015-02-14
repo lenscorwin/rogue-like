@@ -26,10 +26,9 @@
 #ifndef __Game__
 # define __Game__
 
-//# include "Elements.hpp"
 # include "main.hpp"
 # include "Maps.hpp"
-# include "../../Angel/Angel.h"
+# include "Hero.hpp"
 
 class Game {
 
@@ -41,9 +40,18 @@ class Game {
 		void	grid(void);
 		void	start(void);
 		void	readMaps(void);
+		void	initMap(void);
+		void	displayMap(t_map map);
+		void	displayHero(Elements & Hero);
+
+		static void  test(b2Contact *b);
 
 		//Elements	*elements;
 		Maps		*maps;
+
+	private:
+		float		beginXHero;
+		float		beginYHero;
 };
 
 #endif

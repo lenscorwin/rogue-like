@@ -94,17 +94,23 @@ void	Maps::_getMap(void) {
 		currentBlock = new Elements(index);
 		for (itr = blocks[std::to_string(index)].begin(); itr != blocks[std::to_string(index)].end(); itr++)
 			currentBlock->addAttribute(itr.key().asString(), (*itr).asString());
-		current.elements.push_back(currentBlock);
+		current.elements[index] = currentBlock;
 	}
 
 	blocks = this->_root["Map"];
 	std::vector<int> 	tmp;
 	for (index = 0; index < blocks.size(); index++) {
 		for (v = 0; v < blocks[index].size(); v++) {
-			tmp.push_back(v);
+			tmp.push_back(blocks[index][v].asInt());
+			std::cout << blocks[index][v].asInt() << ", ";
 		}
+		std::cout << std::endl;
 		current.map.push_back(tmp);
 		tmp.clear();
 	}
 	this->_maps.push_back(current);
 }
+
+/* GETTERS */
+
+std::list<t_map>	Maps::getFormattedMaps(void) { return this->_maps; };

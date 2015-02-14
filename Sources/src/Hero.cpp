@@ -18,53 +18,36 @@
  */
 
 /**
- * File: Maps.hpp
- * Creation: 2015-02-13 08:03
+ * File: Hero.cpp
+ * Creation: 2015-02-14 10:49
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
-#ifndef __Maps__
-# define __Maps__
+# include "../inc/Hero.hpp"
 
-# include <json/json.h>
-# include <dirent.h>
-# include <iostream>
-# include <string>
-# include <fstream>
-# include <streambuf>
-# include <sstream>
-# include <list>
-# include <string>
-# include <vector>
-# include "Elements.hpp"
+/**
+ * Basic constructor
+ */
+Hero::Hero(void) {
+	this->addAttribute("sprite", "Resources/Images/hero.png");
+	this->addAttribute("physic", "1");
+	this->addAttribute("type", "Hero");
+	this->SetDensity(1.0f);
+	this->SetFriction(1.0f);
+	this->SetRestitution(0.0f);
+}
 
-typedef struct		s_map {
-	int								id;
-	std::string						name;
-	std::string						world;
-	std::string						callbackBegin;
-	std::string						callbackEnd;
-	std::map<int, Elements *>		elements;
-	std::vector<std::vector<int> >	map;
+/**
+ * Basic Deconstructor
+ */
+Hero::~Hero(void) {
+	return ;
+}
 
-}					t_map;
-
-class Maps {
-	public:
-		Maps();
-		Maps(std::string directory);
-		~Maps();
-
-		std::list<t_map>	getFormattedMaps(void);
-		void	readMaps(void);
-
-	private:
-		void	_getMap(void);
-
-		std::string			_directory;
-		Json::Value			_root;
-		Json::Reader		_reader;
-		std::list<t_map>	_maps;
-};
-
-#endif
+/**
+ * Collision with another element
+ */
+void	Hero::callback(PhysicsActor & elem) {
+	//std::cout << this->getAttribute("type") << " collide with " << elem.getAttribute("type") << std::endl;
+	std::cout << "GO HERE" << std::endl;
+}

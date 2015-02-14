@@ -28,17 +28,27 @@
 # define __Elements__
 # include <map>
 # include <string>
+# include "../../Angel/Angel.h"
 
-class Elements {
+class Elements : public PhysicsActor {
 	public:
+		Elements();
 		Elements(int id);
+		Elements(Elements & obj);
 		~Elements();
 
-		void 	addAttribute(std::string name, std::string value);
-		std::string getAttribute(std::string name);
+		void 		addAttribute(std::string name, std::string value);
+		std::string	getAttribute(std::string name);
+		void		setXStart(float X);
+		void		setYStart(float Y);
+		void		display(void);
+		std::map<std::string, std::string>		getAttributes(void);
+		virtual void	callback(PhysicsActor & elem);
 
 	private:
 		int									_id;
+		float								_XStartPos;
+		float								_YStartPos;
 		std::map<std::string, std::string>	_attributes;
 
 };

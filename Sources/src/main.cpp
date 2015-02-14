@@ -25,10 +25,30 @@
 
 # include "../inc/Game.hpp"
 
+class MouseDebugger: public MouseListener {
+	public:
+		MouseDebugger(void) {
+		};
+		~MouseDebugger(void) {
+		};
+		void MouseDownEvent(Vec2i sc, MouseButtonInput button) {
+			Vector2 w;
+			w = MathUtil::ScreenToWorld(sc.X, sc.Y);
+			std::cout << w.X << ":" << w.Y << std::endl;
+		};
+};
+
 int		main(int ac, char **av) {
 	Game	*game = new Game();
-	game->grid();
+	Hero	*hero = new Hero();
+	//game->grid();
 	game->readMaps();
+	game->initMap();
+	MouseDebugger l;
+	theWorld.SetBackgroundColor(*(new Color(0.51f, 0.90f, 1)));
+	game->displayHero(*(hero));
+	theWorld.SetSideBlockers(true, 0.7f);
+
 	game->start();
 	return 0;
 }
