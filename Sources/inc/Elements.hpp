@@ -43,7 +43,6 @@ class Elements : public PhysicsActor {
 		void		setYStart(float Y);
 		void		display(void);
 		std::map<std::string, std::string>		getAttributes(void);
-		virtual void	callback(PhysicsActor & elem);
 
 	private:
 		int									_id;
