@@ -28,5 +28,5 @@
 # define __MAIN__
 
 # define NAME "rogue-like"
-
+# include "Maps.hpp"
 #endif

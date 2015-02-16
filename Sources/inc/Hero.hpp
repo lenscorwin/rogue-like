@@ -33,7 +33,7 @@ class Hero : public Elements {
 		Hero();
 		~Hero();
 
-		virtual void	callback(PhysicsActor & elem);
+		virtual void	callback(Elements * elem);
 };
 
 #endif

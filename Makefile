@@ -56,9 +56,9 @@ SYSSRCS = 							\
 	$(WRAPPER)
 
 SRCS =	./Sources/src/Elements.cpp \
-		./Sources/src/Maps.cpp \
 		./Sources/src/Game.cpp \
 		./Sources/src/main.cpp \
+		./Sources/src/Maps.cpp \
 		./Sources/src/Hero.cpp
 
 SYSOBJS = $(patsubst %.cpp,%.o,$(SYSSRCS))

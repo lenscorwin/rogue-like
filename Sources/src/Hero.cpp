@@ -35,6 +35,7 @@ Hero::Hero(void) {
 	this->SetDensity(1.0f);
 	this->SetFriction(1.0f);
 	this->SetRestitution(0.0f);
+	//this->SetFixedRotation(true);
 }
 
 /**
@@ -46,8 +47,13 @@ Hero::~Hero(void) {
 
 /**
  * Collision with another element
+ * @param: elem (Elements *)
  */
-void	Hero::callback(PhysicsActor & elem) {
-	//std::cout << this->getAttribute("type") << " collide with " << elem.getAttribute("type") << std::endl;
-	std::cout << "GO HERE" << std::endl;
+void	Hero::callback(Elements * elem) {
+	if (elem->getAttribute("type") == "ground") {
+		std::cout << "Hero got a collision with " << elem->getAttribute("type") << ", " << elem->getId() <<  ",  << " << this->getId() << std::endl;
+		this->ApplyLinearImpulse(Vector2(4, 0), Vector2(1, 1));
+	} else {
+		this->GetBody()->SetLinearVelocity(b2Vec2(0, 0));
+	}
 }

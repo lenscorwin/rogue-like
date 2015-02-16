@@ -88,13 +88,16 @@ void	Game::displayMap(t_map map) {
 	std::vector<int>::iterator			v;
 	float								x = 0.0f, y = -10.0f;
 	Elements							*block;
+	Elements							&tmp = *(new Elements());
 
 	for (i = map.map.begin(); i != map.map.end(); i++, x -= 1.0f) {
 		for (y = -10.0f, v = i->begin(); v != i->end(); v++, y += 1.0f) {
 			if ((*v) == 0)
 				block = new Elements();
-			else
-				block = new Elements(*(map.elements[(*v)]));
+			else {
+				tmp = (*(map.elements[(*v)]));
+				block = new Elements(tmp);
+			}
 			block->setXStart(y);
 			block->setYStart(x);
 			block->display();
@@ -114,13 +117,12 @@ void	Game::initMap(void) {
 	std::list<t_map>::iterator	it;
 
 	for (it = maps.begin(); it != maps.end(); it++) {
-		if ((*it).id == 1)
+		if ((*it).id == 1) {
 			this->displayMap(*it);
+		}
 		std::cout << (*it).id << std::endl;
 	}
 }
-
-void	Game::test(b2Contact *b) {};
 
 /**
  * Display the Hero
@@ -131,3 +133,47 @@ void	Game::displayHero(Elements & Hero) {
 	Hero.setYStart(this->beginYHero);
 	Hero.display();
 }
+
+/**
+ * Get the current id, for the intern elements map
+ */
+int		Game::getNextId(void) {
+	return Game::currentIds;
+}
+
+/**
+ * Add an element to the intern map
+ * @param: elem (Elements &)
+ */
+void	Game::addElement(Elements & elem) {
+	std::cout << Game::currentIds << std::endl;
+	Game::elementMap[Game::currentIds] = &elem;
+	Game::currentIds += 1;
+}
+
+/**
+ * Call the collision callbacks on two objects
+ * @param: a (int)
+ * @param: b (int)
+ */
+void	Game::callCallbacks(int a, int b) {
+	if (a != -1 && b != -1) {
+		Game::elementMap[a]->callback(Game::elementMap[b]);
+		Game::elementMap[b]->callback(Game::elementMap[a]);
+	}
+}
+
+/**
+ * List all Elements
+ */
+void	Game::listElement(void) {
+	int		i;
+
+	for (i = 0; i < Game::currentIds; i++) {
+		std::cout << Game::elementMap[i] << std::endl;
+	}
+}
+
+// Set for the statics
+int Game::currentIds = 0;
+std::map<int, Elements *> Game::elementMap = {};

@@ -26,9 +26,11 @@
 #ifndef __Game__
 # define __Game__
 
-# include "main.hpp"
 # include "Maps.hpp"
-# include "Hero.hpp"
+# ifndef __Elements__
+#  include "main.hpp"
+#  include "Elements.hpp"
+# endif
 
 class Game {
 
@@ -44,14 +46,19 @@ class Game {
 		void	displayMap(t_map map);
 		void	displayHero(Elements & Hero);
 
-		static void  test(b2Contact *b);
+		static int	getNextId(void);
+		static void	addElement(Elements & elem);
+		static void	listElement(void);
+		static void	callCallbacks(int a, int b);
 
-		//Elements	*elements;
 		Maps		*maps;
+		static int	currentIds;
+		static std::map<int, Elements *>	elementMap;
 
 	private:
 		float		beginXHero;
 		float		beginYHero;
 };
+
 
 #endif

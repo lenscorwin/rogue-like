@@ -24,6 +24,7 @@
  */
 
 # include "../inc/Game.hpp"
+# include "../inc/Hero.hpp"
 
 class MouseDebugger: public MouseListener {
 	public:
@@ -40,15 +41,17 @@ class MouseDebugger: public MouseListener {
 
 int		main(int ac, char **av) {
 	Game	*game = new Game();
-	Hero	*hero = new Hero();
 	//game->grid();
 	game->readMaps();
 	game->initMap();
 	MouseDebugger l;
 	theWorld.SetBackgroundColor(*(new Color(0.51f, 0.90f, 1)));
+	Hero	*hero = new Hero();
+	theCamera.LockTo(hero);
 	game->displayHero(*(hero));
-	theWorld.SetSideBlockers(true, 0.7f);
+	//theWorld.SetSideBlockers(true, 0.7f);
 
+	Game::listElement();
 	game->start();
 	return 0;
 }

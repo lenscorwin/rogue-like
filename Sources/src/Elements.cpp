@@ -29,13 +29,19 @@
  * Main constructor
  */
 Elements::Elements(void) : PhysicsActor() {
+	this->setId(Game::getNextId());
+	std::cout << "L" << this->getId() << std::endl;
+	Game::addElement(*this);
 	return ;
 }
 
 /**
  * Main constructor
  */
-Elements::Elements(int id) : _id(id), PhysicsActor() {
+Elements::Elements(int id) :  PhysicsActor() {
+	this->setId(Game::getNextId());
+	std::cout << ";" << this->getId() << std::endl;
+	Game::addElement(*this);
 	return ;
 }
 
@@ -43,8 +49,11 @@ Elements::Elements(int id) : _id(id), PhysicsActor() {
  * Copy constructor
  * @param: obj (Elements & obj)
  */
-Elements::Elements(Elements & obj) : PhysicsActor() {
+Elements::Elements(Elements & obj) : PhysicsActor(obj) {
 	this->_attributes = obj.getAttributes();
+	this->setId(Game::getNextId());
+	Game::addElement(*this);
+	std::cout << "'" << this->getId() << std::endl;
 }
 
 /**
@@ -80,7 +89,7 @@ std::string	Elements::getAttribute(std::string name) {
 void	Elements::display(void) {
 	this->SetPosition(this->_XStartPos, this->_YStartPos);
 	this->Tag(this->getAttribute("type"));
-	std::cout << "Add an object at: " << this->_XStartPos << ", " << this->_YStartPos << std::endl;
+	//std::cout << "Add an object at: " << this->_XStartPos << ", " << this->_YStartPos << std::endl;
 	this->Tag(this->getAttribute("type"));
 	if (this->getAttribute("sprite") != "")
 		this->SetSprite(this->getAttribute("sprite"));
@@ -88,19 +97,6 @@ void	Elements::display(void) {
 		this->SetColor(0, 0, 0, 0);
 	this->SetSize(1.0f);
 	this->SetDrawShape(ADS_Square);
-   /* if (this->getAttribute("density") != "")*/
-		//this->SetDensity(std::atof(this->getAttribute("density").c_str()));
-	//else
-		//this->SetDensity(0.0f);
-	//if (this->getAttribute("friction") != "")
-		//this->SetDensity(std::atof(this->getAttribute("friction").c_str()));
-	//else
-		//this->SetDensity(0.0f);
-	//if (this->getAttribute("density") != "")
-		//this->SetDensity(std::atof(this->getAttribute("density").c_str()));
-	//else
-		//this->SetDensity(0.0f);
-
 	if (this->getAttribute("type") == "wall" || this->getAttribute("type") == "ground") {
 		this->SetDensity(0);
 		this->SetFriction(1);

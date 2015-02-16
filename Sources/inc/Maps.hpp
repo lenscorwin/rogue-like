@@ -36,7 +36,11 @@
 # include <list>
 # include <string>
 # include <vector>
+
 # include "Elements.hpp"
+# include "main.hpp"
+
+class	Elements;
 
 typedef struct		s_map {
 	int								id;

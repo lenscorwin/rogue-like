@@ -28,6 +28,10 @@
 # define __Elements__
 # include <map>
 # include <string>
+# ifndef __Maps__
+#  include "../inc/Game.hpp"
+# endif
+# include "Maps.hpp"
 # include "../../Angel/Angel.h"
 
 class Elements : public PhysicsActor {
@@ -44,8 +48,10 @@ class Elements : public PhysicsActor {
 		void		display(void);
 		std::map<std::string, std::string>		getAttributes(void);
 
+		/* Virtual function, overrited in Childs */
+		virtual void callback(Elements * elem) { };
+
 	private:
-		int									_id;
 		float								_XStartPos;
 		float								_YStartPos;
 		std::map<std::string, std::string>	_attributes;
