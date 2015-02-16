@@ -14,7 +14,7 @@ library_names=''
 old_library='libftgl.a'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libfreetype.la -lz -lGLU -lGL'
+dependency_libs=' -L/usr/lib/i386-linux-gnu /usr/lib/i386-linux-gnu/libfreetype.la -lz -lGLU -lGL'
 
 # Version information for libftgl.
 current=0
