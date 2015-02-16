@@ -34,6 +34,7 @@
 #include <Box2D/Box2D.h>
 struct b2ShapeDef;
 
+
 ///An Actor that interacts with other Actors using our built-in physics system
 /** 
  * Angel incorporates Box2D (http://www.box2d.org) to handle our physics 
@@ -62,6 +63,7 @@ public:
 	 */
 	virtual ~PhysicsActor();
 	
+
 	///The two physics shapes we currently support. If you want anything else,
 	/// you're going to be delving into the Box2D library itself. 
 	enum eShapeType
@@ -270,7 +272,7 @@ public:
 	 *   zero, assumed to be equal to x
 	 */
 	void SetDrawSize(float x, float y = -1.f);
-	
+
 	/**
 	 * An override of the Actor::SetPosition function that disables itself 
 	 *  after #InitPhysics has been called.
@@ -321,6 +323,13 @@ public:
 	 */
 	virtual const String GetClassName() const { return "PhysicsActor"; }
 
+	//virtual void CallbackCollision(void) { std::cout << "HERE1" << std::endl; };
+	
+	/* Modified code by Louis 16/02/15 */
+	void	setId(int i);
+	int		getId(void) { return this->_id; };
+	/* END */
+
 protected:
 	virtual void InitShape(b2Shape* /*shapeDef*/ ) {}
 	b2Body *_physBody;
@@ -332,6 +341,7 @@ protected:
 	bool _isSensor;
 	int _groupIndex;
 	bool _fixedRotation;
+	int		_id;
 
 private:
 	friend class World;

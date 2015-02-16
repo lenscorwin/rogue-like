@@ -1,6 +1,6 @@
 ANGEL_DISABLE_FMOD := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_FMOD[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' AngelConfig.h)
 ANGEL_DISABLE_DEVIL := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_DEVIL[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' AngelConfig.h)
-CXX = g++
+CXX = g++ -g
 CXXFLAGS =
 TARGET = libangel.a
 ANGEL_FLAGS = -D ANGEL_RELEASE
@@ -23,7 +23,8 @@ INCLUDE = 							\
 	-ILibraries/lua-5.2.1/src				\
 	-ILibraries/gwen/include				\
 	-IInfrastructure					\
-	-I/usr/include/freetype2
+	-I/usr/include/freetype2			\
+	-I../Tools/jsoncpp/include/
 ifneq ($(ANGEL_DISABLE_FMOD), 1)
 	INCLUDE += -ILibraries/FMOD/inc
 endif
@@ -146,6 +147,7 @@ $(TARGET): libraries $(OBJS) Lua
 	$(RANLIB) $@
 
 angel: libraries $(OBJS) Lua
+	rm -f $(OBJS) $(TARGET)
 	$(AR) $@ $(OBJS) $(LIBS)
 	$(RANLIB) $@
 

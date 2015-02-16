@@ -33,6 +33,7 @@
 #include "../Infrastructure/World.h"
 #include "../Infrastructure/Log.h"
 #include "../Util/MathUtil.h"
+# include "../../Sources/inc/Game.hpp"
 
 #include <Box2D/Box2D.h>
 
@@ -48,10 +49,15 @@ _restitution(0.0f),
 _shapeType(SHAPETYPE_BOX),
 _isSensor(false),
 _groupIndex(0), 
-_fixedRotation(false)
+_fixedRotation(false),
+_id(-1)
 {
 }
 
+void	PhysicsActor::setId(int i) { 
+	std::cout << "New set id " << i  << " (" << this->_id << "),  " << Game::currentIds<< std::endl;
+	this->_id = i; 
+}
 PhysicsActor::~PhysicsActor()
 {
 	if( _physBody != NULL )

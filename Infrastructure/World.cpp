@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 #include "../Infrastructure/World.h"
+#include "../../Sources/inc/Game.hpp"
 
 #include "../Infrastructure/Camera.h"
 #include "../Infrastructure/Log.h"
@@ -575,8 +576,11 @@ void World::SendCollisionNotifications(b2Contact* contact, bool beginning)
 		messageStart = "CollisionEndWith";
 	}
 	
-	PhysicsActor* pa1 = (PhysicsActor*)contact->GetFixtureA()->GetBody()->GetUserData();
-	PhysicsActor* pa2 = (PhysicsActor*)contact->GetFixtureB()->GetBody()->GetUserData();
+	PhysicsActor* pa1 /*= new PhysicsActor()*/;
+	PhysicsActor* pa2 /*= new PhysicsActor()*/;
+	pa1 = (PhysicsActor*)contact->GetFixtureA()->GetBody()->GetUserData();
+	pa2 = (PhysicsActor*)contact->GetFixtureB()->GetBody()->GetUserData();
+
 	
 	if (pa1 != NULL)
 	{
@@ -608,6 +612,8 @@ void World::SendCollisionNotifications(b2Contact* contact, bool beginning)
 
 	/* MODIFIED CODE BY Louis */
 	if (pa1 && pa2) {
+		std::cout << "CALL " << pa1->getId() << ", " << pa2->getId() << std::endl;
+		Game::callCallbacks(pa1->getId(), pa2->getId());
  		StringSet::iterator a = pa1->GetTags().begin();
  		StringSet::iterator b = pa2->GetTags().begin();
 		String globalMessage = messageStart + ":" + *a  + "." + *b;

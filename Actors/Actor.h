@@ -113,7 +113,8 @@ public:
 	 * @return Actor's size as a Vector2
 	 */
 	const Vector2& GetSize() const;
-	
+
+
 	/**
 	 * Return the BoundingBox for this Actor.
 	 *
@@ -205,7 +206,7 @@ public:
 	 * @param drawShape Desired shape
 	 */
 	virtual void SetDrawShape( actorDrawShape drawShape );
-	
+
 	/**
 	 * Get the current shape of this Actor.
 	 *
