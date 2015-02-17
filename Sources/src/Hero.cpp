@@ -18,15 +18,42 @@
  */
 
 /**
- * File: main.hpp
- * Creation: 2015-02-13 07:20
+ * File: Hero.cpp
+ * Creation: 2015-02-14 10:49
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
+# include "../inc/Hero.hpp"
 
-#ifndef __MAIN__
-# define __MAIN__
+/**
+ * Basic constructor
+ */
+Hero::Hero(void) {
+	this->addAttribute("sprite", "Resources/Images/hero.png");
+	this->addAttribute("physic", "1");
+	this->addAttribute("type", "Hero");
+	this->SetDensity(1.0f);
+	this->SetFriction(1.0f);
+	this->SetRestitution(0.0f);
+	//this->SetFixedRotation(true);
+}
 
-# define NAME "rogue-like"
-# include "Maps.hpp"
-#endif
+/**
+ * Basic Deconstructor
+ */
+Hero::~Hero(void) {
+	return ;
+}
+
+/**
+ * Collision with another element
+ * @param: elem (Elements *)
+ */
+void	Hero::callback(Elements * elem) {
+	if (elem->getAttribute("type") == "ground") {
+		std::cout << "Hero got a collision with " << elem->getAttribute("type") << ", " << elem->getId() <<  ",  << " << this->getId() << std::endl;
+		this->ApplyLinearImpulse(Vector2(4, 0), Vector2(1, 1));
+	} else {
+		this->GetBody()->SetLinearVelocity(b2Vec2(0, 0));
+	}
+}

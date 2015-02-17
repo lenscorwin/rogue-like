@@ -1,3 +1,4 @@
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,15 +19,42 @@
  */
 
 /**
- * File: main.hpp
- * Creation: 2015-02-13 07:20
+ * File: Elements.hpp
+ * Creation: 2015-02-13 07:39
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
-
-#ifndef __MAIN__
-# define __MAIN__
-
-# define NAME "rogue-like"
+#ifndef __Elements__
+# define __Elements__
+# include <map>
+# include <string>
+# ifndef __Maps__
+#  include "../inc/Game.hpp"
+# endif
 # include "Maps.hpp"
+# include "../../Angel/Angel.h"
+
+class Elements : public PhysicsActor {
+	public:
+		Elements();
+		Elements(int id);
+		Elements(Elements & obj);
+		~Elements();
+
+		void 		addAttribute(std::string name, std::string value);
+		std::string	getAttribute(std::string name);
+		void		setXStart(float X);
+		void		setYStart(float Y);
+		void		display(void);
+		std::map<std::string, std::string>		getAttributes(void);
+
+		/* Virtual function, overrited in Childs */
+		virtual void callback(Elements * elem) { };
+
+	private:
+		float								_XStartPos;
+		float								_YStartPos;
+		std::map<std::string, std::string>	_attributes;
+
+};
 #endif

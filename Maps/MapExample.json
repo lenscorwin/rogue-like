@@ -1,26 +1,27 @@
 {
-	"General" : {
+	"general" : {
 		"name": "Example Map",
 		"callbacks": "SomeCallback",
 		"world": "Basic",
-		"id": "1"
+		"id": 1
 	},
 	"Blocks": {
 		"1": {
 			"type": "ground",
-			"sprite": "/path/to/png"
+			"sprite": "Resources/Images/ground.png",
+			"physic": "1"
 		},
 		"2": {
 			"type": "wall",
-			"sprite": "/path/to/png"
+			"sprite": "Resources/Images/wall.png",
+			"physic": "1"
 		},
 		"3": {
 			"type": "corner",
-			"orientation": "90",
-			"sprite": "/path/to/png"
+			"orientation": "90"
+			//"sprite": "/path/to/png"
 		},
 		"4": {
-			"heritage": "1",
 			"attribute": "start"
 		},
 		"5": {
@@ -29,13 +30,11 @@
 			"nextMap": "2"
 		}
 	},
-	"Map": {
-		{
-			{2,0,0,0,0,0,2},
-			{2,0,0,0,0,0,2},
-			{2,0,0,0,0,0,2},
-			{2,0,0,0,0,0,2},
-			{3,4,1,1,1,5,3}
-		}
-	}
+   "Map": [
+			[2,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+			[2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2],
+			[2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
+	]
 }

@@ -18,15 +18,22 @@
  */
 
 /**
- * File: main.hpp
- * Creation: 2015-02-13 07:20
+ * File: Hero.hpp
+ * Creation: 2015-02-14 10:49
  * Louis Solofrizzo <louis@ne02ptzero.me>
  */
 
+#ifndef __Hero__
+# define __Hero__
 
-#ifndef __MAIN__
-# define __MAIN__
+# include "Elements.hpp"
 
-# define NAME "rogue-like"
-# include "Maps.hpp"
+class Hero : public Elements {
+	public:
+		Hero();
+		~Hero();
+
+		virtual void	callback(Elements * elem);
+};
+
 #endif

@@ -1,7 +1,9 @@
 [submodule "Windows"]
 	path = Windows
 	url = http://github.com/Ne02ptzero/rogue-like
+[submodule "jsoncpp"]
+	path = Tools/jsoncpp
+	url = http://github.com/open-source-parsers/jsoncpp
 [submodule "Angel"]
 	path = Angel
 	url = http://github.com/Ne02ptzero/rogue-like
-	branch = angel

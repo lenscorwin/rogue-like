@@ -1,6 +1,6 @@
 ANGEL_DISABLE_FMOD := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_FMOD[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' Angel/AngelConfig.h)
 ANGEL_DISABLE_DEVIL := $(shell sed -rn 's/^[[:space:]]*\#define[[:space:]]+ANGEL_DISABLE_DEVIL[[:space:]]+([[:digit:]])[[:space:]]*$$/\1/p' Angel/AngelConfig.h)
-CXX = g++
+CXX = g++ -std=c++0x -g -D ANGEL
 TARGET = rogue-like
 ANGEL_FLAGS = -D ANGEL_RELEASE
 ARCH := $(shell uname -m)
@@ -17,7 +17,8 @@ INCLUDE = 							\
 	-IAngel/Libraries/Box2D-2.2.1			\
 	-IAngel/Libraries/FTGL/include			\
 	-IAngel/Libraries/lua-5.2.1/src			\
-	-I/usr/include/freetype2
+	-I/usr/include/freetype2				\
+	-I./Tools/jsoncpp/include
 ifneq ($(ANGEL_DISABLE_FMOD), 1)
 	INCLUDE += -IAngel/Libraries/FMOD/inc
 endif
@@ -28,7 +29,9 @@ LIBS = 									\
 	Angel/Libraries/Box2D-2.2.1/Build/Box2D/libBox2D.a		\
 	Angel/Libraries/FTGL/unix/src/.libs/libftgl.a		\
 	Angel/Libraries/gwen/lib/linux/gmake/libgwen_static.a	\
-	Angel/Libraries/angel-lua-build/liblua.a
+	Angel/Libraries/angel-lua-build/liblua.a \
+	Tools/jsoncpp/src/lib_json/libjsoncpp.a
+
 
 ifneq ($(ANGEL_DISABLE_FMOD), 1)
 	ifeq ($(ARCH),x86_64)
@@ -52,7 +55,11 @@ endif
 SYSSRCS = 							\
 	$(WRAPPER)
 
-SRCS =	$(wildcard Sources/src/*.cpp)
+SRCS =	./Sources/src/Elements.cpp \
+		./Sources/src/Game.cpp \
+		./Sources/src/main.cpp \
+		./Sources/src/Maps.cpp \
+		./Sources/src/Hero.cpp
 
 SYSOBJS = $(patsubst %.cpp,%.o,$(SYSSRCS))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
@@ -72,7 +79,10 @@ SWIG-Wrapper:
 
 $(WRAPPER): SWIG-Wrapper
 
-$(TARGET): $(LIBANGEL) $(OBJS) $(SYSOBJS) $(WRAPPER)
+jsoncpp:
+	cd Tools/jsoncpp && cmake . && make
+
+$(TARGET): $(LIBANGEL) jsoncpp $(OBJS) $(SYSOBJS) $(WRAPPER)
 	$(CXX) -o $@ $(OBJS) $(SYSOBJS) $(LIBS) $(SHLIBS) $(ANGEL_FLAGS)
 	cp -p Angel/Scripting/EngineScripts/*.lua Resources/Scripts
 
